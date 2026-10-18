@@ -228,3 +228,29 @@ main {
     color: #8B7488;
     font-size: 14px;
 }
+
+
+
+/* ===== Project search ===== */
+.project-search {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+    border: 1px solid #3A1A30;
+    border-radius: 6px;
+    background-color: #14060F;
+    color: #F5EDF2;
+    font-family: inherit;
+    font-size: 14px;
+}
+
+.project-search:focus {
+    outline: none;
+    border-color: #E0217B;
+}
+
+.empty-message {
+    margin-top: 16px;
+    color: #C9A9BE;
+    text-align: center;
+}
