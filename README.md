@@ -1,57 +1,58 @@
-# Razan  Personal Portfolio 
+# Razan Almubarak – Personal Portfolio (Assignment 2)
 
 ## Project Description
 
- A simple, responsive personal portfolio web application built as the
-foundation for a professional portfolio website. 
-It was created for **SWE 363  Assignment 1: Foundation & AI Integration**.
+A personal portfolio website built with HTML, CSS, and JavaScript for
+**SWE 363 – Assignment 2**. It continues my Assignment 1 portfolio and makes
+it more interactive.
 
-The site includes three main sections:
+The site has three sections:
 
-- **About Me** - a short introduction and tagline.
-- **Projects** - two sample projects . 
-- **Contact** - a simple contact form (Name, Email, Message). No backend is
-  connected; the form is for front-end practice only.
+- **About Me** – a short introduction.
+- **Projects** – project cards with a live search.
+- **Contact** – a contact form with validation.
 
-The layout is built with plain HTML and CSS  and
-includes one JavaScript feature: a greeting message that changes automatically
-based on the time of day the visitor opens the page.
+### New in Assignment 2
 
-## Setup Instructions 
+| Feature | Description |
+|---|---|
+| **Live project search** | A search box filters the project cards while the user types. If nothing matches, the message *"No projects found. Try a different keyword."* appears. |
+| **Contact form validation** | JavaScript checks that the name, email, and message are not empty and that the email has a valid format. Each invalid field gets a red border and an error message under it, and correct fields get a green border. When everything is valid, a green confirmation message appears and the form is cleared. |
+| **Animations** | Error and success messages fade in and slide down slightly using a CSS `@keyframes` animation. |
 
- a static HTML/CSS/JS site.
+Features kept from Assignment 1: the time-of-day greeting in the header and the
+responsive layout using Flexbox.
 
-1. Download or clone this repository:
-   ```
-git clone https://github.com/<your-github-username>/<repository-name>.git   ```
+> No backend is connected. The contact form does not send data anywhere; it only
+> validates the input and shows a confirmation message.
+
+## Setup Instructions (Run Locally)
+
+This is a static site, so it needs no installation or server.
+
+1. Clone the repository:
+```bash
+   git clone https://github.com/Razan8vi/202354910-RazanAlmubarak-assignment2.git
+```
 2. Open the project folder.
-
-3. Open `index.html` directly in any modern web browser (double-click the
-   file, or right-click → "Open with" → your browser).
-4. That's it - no server or dependencies are needed to view the site.
+3. Open `index.html` in any modern browser (double-click it), **or** in VS Code
+   use the **Live Server** extension ("Go Live") to reload the page automatically
+   after each change.
 
 ## Project Structure
-
-```
-assignment/
+202354910-RazanAlmubarak-assignment2/
 ├── README.md
 ├── index.html
 ├── css/
-│   └── styles.css
+│ └── styles.css
 ├── js/
-│   └── script.js
+│ └── script.js
 ├── assets/
-│   └── images/
-└── docs/
-    ├── ai-usage-report.md
-    └── technical-documentation.md
-```
+│ └── images/
+├── docs/
+│ ├── ai-usage-report.md
+│ └── technical-documentation.md
+└── .gitignore
 
 ## AI Use Summary
-
-ChatGPT was used to understand course concepts, review HTML, CSS and help identify and fix small issues during development. I reviewed, tested, and adjusted all suggestions before using them in the final project. Full details are available in `docs/ai-usage-report.md`.
-
-## Notes
-
-- This assignment  keeps the design simple and focused on
-  structure rather than heavy visual styling, per the assignment guidelines.
+I used Claude (Opus 5.5) and ChatGPT to understand the requirements, plan the features, learn a Git workflow with feature branches, get code suggestions for the live search and form validation, and draft the documentation. I placed the code in my own Assignment 1 structure, removed old code that the new features replaced, fixed a mistake I made when pasting, and tested every feature myself. AI-assisted commits include an Assisted-by: note naming the AI tool used. Full details, including the usage log and my declaration, are in [`docs/ai-usage-report.md`](docs/ai-usage-report.md).GPT-5

@@ -1,48 +1,143 @@
-# Technical Documentation
+# Technical Documentation – Assignment 2
 
 ## 1. Overview
 
-This document explains the technical structure and main design decisions used to build my personal portfolio website for SWE 363 Assignment 1.
-The website was created using plain HTML, CSS, and JavaScript.
-## 2. HTML Structure
+This document explains the structure of my portfolio website and the technical
+changes I made in Assignment 2. The site uses plain HTML, CSS, and JavaScript,
+with no frameworks or libraries. Assignment 2 builds on Assignment 1 and adds a
+live project search, contact form validation, and animated feedback messages.
 
-The website uses  HTML elements such as `header`, `nav`, `main`, `section`, and `footer` to keep the page organized and easy to understand.
+## 2. File Structure
 
-The website has three required sections:
+| File | Purpose |
+|---|---|
+| `index.html` | Page structure: header, About, Projects, Contact, footer |
+| `css/styles.css` | All styling, including the new search box, messages, and animation |
+| `js/script.js` | Greeting, form validation, and live search |
+| `assets/images/` | Project images |
+| `docs/` | AI usage report and this document |
 
-* **About Me:** Includes a short introduction and tagline.
-* **Projects:** Includes two project cards with titles, descriptions, and placeholder images.
-* **Contact:** Includes a form with Name, Email, and Message fields.
+## 3. HTML Structure
 
-Each section has a unique `id`, such as `about`, `projects`, and `contact`. The navigation links use these IDs to move to the correct section on the page.
-The contact form uses `label`, `input`, `textarea`, and `button` elements. 
+The page uses semantic elements (`header`, `nav`, `main`, `section`, `footer`).
+Each section has an `id` (`about`, `projects`, `contact`) that the navigation
+links use.
 
-## 3. CSS and Responsive Design
+Elements added in Assignment 2:
 
-All styling is placed in the external stylesheet `css/styles.css`. This keeps the HTML structure separate from the visual design.
+- **Projects section:** an `<input type="search" id="project-search">` above the
+  project list, and a `<p id="no-projects" class="empty-message" hidden>` below it.
+  The `hidden` attribute keeps the message invisible until JavaScript shows it.
+- **Contact form:**
+  - The old `onsubmit="showFormMessage(); return false;"` was replaced with
+    `novalidate`, which turns off the browser's default popups so that the
+    page can show its own messages.
+  - An empty `<p class="error-message">` was added under each field
+    (`name-error`, `email-error`, `message-error`). JavaScript writes the error
+    text into them.
 
-The website uses CSS properties such as colors, margins, padding, borders, fonts, and the box model to create spacing and organize the content.
+## 4. JavaScript Features
 
-* The navigation links use Flexbox and can wrap on smaller screens.
-* The project cards use Flexbox and wrap from two cards into one column when the screen becomes narrow.
-* The contact form uses `flex-direction: column` to place the fields vertically.
-The layout uses percentage widths, `max-width`, `min-width`, and Flexbox wrapping to support desktop, tablet, and mobile screens.
+### 4.1 Time-of-day greeting (from Assignment 1)
 
-## 4. Visual Design
+`getGreetingMessage()` reads the current hour with `new Date().getHours()` and
+uses `if / else if / else` to choose a morning, afternoon, or evening greeting.
 
-The website uses a dark plum background with pink accents for buttons, borders, and interactive elements. The colors were selected to create a clean and professional appearance.
-## 5. JavaScript Features
+### 4.2 Live project search (Dynamic Content)
 
-The website includes two JavaScript interactions:
+- An `input` event listener on the search box runs on every keystroke.
+- The search text is converted with `toLowerCase()` and `trim()`, so the search is
+  not case-sensitive and ignores extra spaces.
+- `querySelectorAll(".project-card")` gets all cards, and `forEach` checks whether
+  each card's `textContent` `includes()` the search text.
+- Matching cards are shown (`display = ""`) and the others are hidden
+  (`display = "none"`).
+- A counter (`visibleCount`) tracks the visible cards. If it is `0`, the
+  "No projects found" message is shown by setting `hidden = false`.
 
-1. A time-of-day greeting that displays a different message in the header depending on the visitor's local time.
-2. A confirmation message that appears when the contact form is submitted. The form fields are then reset without sending data to a server.
+### 4.3 Contact form validation (Data Handling)
 
-The JavaScript uses variables (`let` and `const`), conditional statements (`if`, `else if`, and `else`),
- and functions. These concepts were used to apply the JavaScript material covered in class.
+- A `submit` event listener calls `event.preventDefault()` so the page does not
+  reload.
+- The values are read with `.value.trim()`.
+- Rules:
+  - **Name:** must not be empty.
+  - **Email:** must not be empty and must match the pattern
+    `/^[^\s@]+@[^\s@]+\.[^\s@]+$/` (text, then `@`, then text, a dot, and text).
+  - **Message:** must not be empty.
+- Two helper functions keep the code short:
+  - `showError()` writes the error text, adds the `input-error` class (red
+    border), and removes `input-valid`.
+  - `clearError()` clears the error text, removes `input-error`, and adds
+    `input-valid` (green border).
+- A boolean `isValid` becomes `false` when any rule fails. Only when it stays
+  `true` does the form show *"Thank you, [name]! Your message has been received."*,
+  reset the fields, and remove the green borders.
 
-## 6. Testing and Limitations
+## 5. CSS
 
-The website should be tested by opening `index.html` in a browser, resizing the browser window, checking the navigation links, and submitting the contact form.
+### 5.1 New styles
 
-The contact form is a front-end feature only. It displays a confirmation message but does not send data anywhere because no backend is included.
+- `.project-search` – full-width search box with the same dark background and
+  pink focus border as the form inputs.
+- `.empty-message` – centered, muted text for the "No projects found" message.
+- `.error-message` – red error text (`#FF6B8A`). `.error-message:empty` hides it
+  when it has no text, so it does not leave gaps between fields.
+- `.input-error` / `.input-valid` – red or green border on a field.
+- `.form-message.success` – green confirmation text (`#4ADE80`).
+
+### 5.2 Animation
+
+```css
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-4px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+```
+
+It is applied to `.error-message` (0.3s) and `.form-message.success` (0.4s), so the
+messages fade in and slide down slightly instead of appearing suddenly. The effect
+is short and subtle, so it does not distract the user.
+
+### 5.3 Responsive design (from Assignment 1)
+
+The layout uses Flexbox with `flex-wrap`, `min-width`, `max-width`, and percentage
+widths. The project cards change from two columns to one on narrow screens, and
+the new search box uses `width: 100%`.
+
+## 6. User Feedback & Error Handling
+
+| Situation | What the user sees |
+|---|---|
+| Search has no matches | "No projects found. Try a different keyword." |
+| Empty name / email / message | A red message under the field and a red border |
+| Invalid email format | "Please enter a valid email, like name@example.com." |
+| Correct field | Green border |
+| All fields valid | Green "Thank you, [name]! Your message has been received." |
+
+Each message tells the user what happened and what to do next.
+
+## 7. Development Workflow
+
+Each feature was developed on its own Git branch and then merged into `main`:
+
+- `feature/project-search`
+- `feature/form-validation`
+- `feature/valid-field-style`
+
+## 8. Testing
+
+| Test | Expected result |
+|---|---|
+| Search "tuwaiq" | Only the Tuwaiq project is shown |
+| Search "xyz" | No cards; the empty message appears |
+| Clear the search | Both projects return |
+| Submit an empty form | Three error messages and red borders |
+| Email "abc" | Invalid email message |
+| All fields valid | Green confirmation message; the form is cleared |
+| Narrow screen / phone size | Cards stack in one column and the search box fits the screen |
+
+## 9. Limitations
+
+- The contact form has no backend, so messages are not actually sent.
+- The search only matches text inside the project cards.
